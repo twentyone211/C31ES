@@ -29,6 +29,8 @@
 /* USER CODE BEGIN Includes */
 
 #include "stm32746g_discovery_lcd.h"
+#include "lcd_log.h"
+
 
 /* USER CODE END Includes */
 
@@ -39,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD choose task e - j */
-#define Task_f
+#define Task_h
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -212,7 +214,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  void lcdinit()
+  void lcd_init()
   {
 	  BSP_LCD_Init();
 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
@@ -227,14 +229,46 @@ int main(void)
   char str2[] = "Lukas";
   char str3[] = "Philipp";
 
-  lcdinit();
+  lcd_init();
   BSP_LCD_Clear(LCD_COLOR_ORANGE);
   BSP_LCD_DisplayStringAt(10, 10, str1, LEFT_MODE);
   BSP_LCD_DisplayStringAt(20, 110, str2, CENTER_MODE);
   BSP_LCD_DisplayStringAt(50, 220, str3, RIGHT_MODE);
 
+
 #endif
 
+#ifdef Task_h
+
+  int i = 0;
+  char str[16];
+
+  char header[] = "Counter";
+  char footer[] = "Frank - Philipp - Lukas";
+
+
+
+
+
+  lcd_init();
+  LCD_LOG_Init();
+  BSP_LCD_Clear(LCD_COLOR_DARKGREEN);
+  LCD_LOG_SetHeader(header);
+  LCD_LOG_SetFooter(footer);
+
+
+
+  while (1)
+  {
+
+	  sprintf(str, "%d", i);
+	  BSP_LCD_DisplayStringAt(20, 110, str, CENTER_MODE);
+	  HAL_Delay(1000);
+
+	  i++;
+  }
+
+#endif
 
   while (1)
   {
