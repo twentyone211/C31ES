@@ -41,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD choose task e - j */
-#define Task_h
+#define Task_i
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -199,15 +199,15 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
- // osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
- //  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
+   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
- // osKernelStart();
+  osKernelStart();
   
   /* We should never get here as control is now taken by the scheduler */
 
@@ -220,7 +220,6 @@ int main(void)
 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
 	  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
 	  BSP_LCD_DisplayOn();
-
   }
 
 #ifdef Task_f
@@ -246,29 +245,23 @@ int main(void)
   char header[] = "Counter";
   char footer[] = "Frank - Philipp - Lukas";
 
-
-
-
-
   lcd_init();
   LCD_LOG_Init();
   BSP_LCD_Clear(LCD_COLOR_DARKGREEN);
   LCD_LOG_SetHeader(header);
   LCD_LOG_SetFooter(footer);
 
-
-
   while (1)
   {
-
 	  sprintf(str, "%d", i);
 	  BSP_LCD_DisplayStringAt(20, 110, str, CENTER_MODE);
 	  HAL_Delay(1000);
-
 	  i++;
   }
 
 #endif
+
+
 
   while (1)
   {
@@ -1614,17 +1607,41 @@ void StartDefaultTask(void const * argument)
   MX_USB_HOST_Init();
 
   /* USER CODE BEGIN 5 */
+
+
+
+
+  int i = 0;
+  char str[16];
+
+  char header[] = "Counter";
+  char footer[] = "Frank - Philipp - Lukas - Task_i";
+
+  BSP_LCD_Init();
+  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
+  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
+  BSP_LCD_DisplayOn();
+  LCD_LOG_Init();
+  BSP_LCD_Clear(LCD_COLOR_DARKGREEN);
+  LCD_LOG_SetHeader(header);
+  LCD_LOG_SetFooter(footer);
+
+
+
   /* Infinite loop */
+
+
   for (;;) {
 
-	  HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_1);
-	  if (HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11)) {
-		  osDelay(500);
-	  } else {
-		  osDelay(100);
-	  }
+	  sprintf(str, "%d", i);
+	 	  BSP_LCD_DisplayStringAt(20, 110, str, CENTER_MODE);
+	 	  osDelay(1000);
+	 	  i++;
+
+
 
   }
+
   /* USER CODE END 5 */ 
 }
 
