@@ -299,10 +299,10 @@ int main(void)
 
   while (1)
   {
-    /* USER CODE END WHILE */
+
 
 #ifdef Task_e
-
+		 /* USER CODE BEGIN WHILE */
   int count = 0;
 
 	if ( HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11))
@@ -320,6 +320,7 @@ int main(void)
 
 
 	#endif
+	 /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
