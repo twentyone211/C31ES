@@ -41,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD choose task e - j */
-#define Task_i
+#define Task_g
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -199,15 +199,16 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
-   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
+  // defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
-  osKernelStart();
+ // osKernelStart();
   
   /* We should never get here as control is now taken by the scheduler */
 
@@ -222,11 +223,13 @@ int main(void)
 	  BSP_LCD_DisplayOn();
   }
 
+
+
 #ifdef Task_f
 
-  char str1[] = "Frank";
-  char str2[] = "Lukas";
-  char str3[] = "Philipp";
+  char str1[] = "Liebe";
+  char str2[] = "Dich";
+  char str3[] = "Mein Schatz";
 
   lcd_init();
   BSP_LCD_Clear(LCD_COLOR_ORANGE);
@@ -258,6 +261,53 @@ int main(void)
 	  HAL_Delay(1000);
 	  i++;
   }
+
+#endif
+
+#ifdef Task_g
+
+#define LAYER0	     ((uint32_t)0) /* background */
+#define LAYER1	     ((uint32_t)1) /* foreground */
+
+
+  BSP_LCD_Init();
+  BSP_LCD_LayerDefaultInit(LAYER0, LCD_FB_START_ADDRESS);
+  BSP_LCD_LayerDefaultInit(LAYER1, LCD_FB_START_ADDRESS);
+
+  BSP_LCD_SelectLayer(0);
+  BSP_LCD_Clear(LCD_COLOR_RED);
+  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+  BSP_LCD_FillRect(40,80,200,200);
+
+
+  BSP_LCD_SelectLayer(LAYER1);
+  BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+  BSP_LCD_FillRect(0,0,200,200);
+
+
+
+  BSP_LCD_SetTransparency(LAYER0, 0xf0);
+  BSP_LCD_SetTransparency(LAYER1, 0xf0);
+
+  BSP_LCD_DisplayOn();
+
+
+
+
+
+/*
+  BSP_LCD_SelectLayer(1);
+  BSP_LCD_SetTransparency(0, 0xaf);
+  BSP_LCD_SetTransparency(1, 0xaf);
+  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+  BSP_LCD_FillRect(40,80,200,200);
+
+*/
+
+
+
+
+
 
 #endif
 
@@ -1626,22 +1676,15 @@ void StartDefaultTask(void const * argument)
   LCD_LOG_SetHeader(header);
   LCD_LOG_SetFooter(footer);
 
-
-
   /* Infinite loop */
 
-
-  for (;;) {
-
-	  sprintf(str, "%d", i);
+  while (1)
+  {
+  	  	  sprintf(str, "%d", i);
 	 	  BSP_LCD_DisplayStringAt(20, 110, str, CENTER_MODE);
 	 	  osDelay(1000);
 	 	  i++;
-
-
-
   }
-
   /* USER CODE END 5 */ 
 }
 
