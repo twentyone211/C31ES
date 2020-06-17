@@ -41,7 +41,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD choose task e - j */
-#define Task_g
+#define Task_e
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -220,22 +221,23 @@ int main(void)
 	  BSP_LCD_Init();
 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
 	  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
-	  BSP_LCD_DisplayOn();
   }
+
 
 
 
 #ifdef Task_f
 
-  char str1[] = "Liebe";
-  char str2[] = "Dich";
-  char str3[] = "Mein Schatz";
+  char str1[] = "Frank";
+  char str2[] = "Lukac";
+  char str3[] = "Philipp";
 
   lcd_init();
   BSP_LCD_Clear(LCD_COLOR_ORANGE);
   BSP_LCD_DisplayStringAt(10, 10, str1, LEFT_MODE);
   BSP_LCD_DisplayStringAt(20, 110, str2, CENTER_MODE);
   BSP_LCD_DisplayStringAt(50, 220, str3, RIGHT_MODE);
+  BSP_LCD_DisplayOn();
 
 
 #endif
@@ -266,47 +268,29 @@ int main(void)
 
 #ifdef Task_g
 
-#define LAYER0	     ((uint32_t)0) /* background */
-#define LAYER1	     ((uint32_t)1) /* foreground */
+#define LAYER0	     ((uint32_t)0) // background
+#define LAYER1	     ((uint32_t)1) // foreground
+#define LCD_BG_START_ADDRESS  (LCD_FB_START_ADDRESS+(480*272*4)) // 480x272 pixel * 4 byte
 
 
   BSP_LCD_Init();
   BSP_LCD_LayerDefaultInit(LAYER0, LCD_FB_START_ADDRESS);
-  BSP_LCD_LayerDefaultInit(LAYER1, LCD_FB_START_ADDRESS);
+  BSP_LCD_LayerDefaultInit(LAYER1, LCD_BG_START_ADDRESS);
 
-  BSP_LCD_SelectLayer(0);
+
+
+  BSP_LCD_SelectLayer(LAYER0); // background
   BSP_LCD_Clear(LCD_COLOR_RED);
-  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-  BSP_LCD_FillRect(40,80,200,200);
-
-
-  BSP_LCD_SelectLayer(LAYER1);
   BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+  BSP_LCD_FillRect(100,100,150,150);
+
+  BSP_LCD_SelectLayer(LAYER1); // foreground
+  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
   BSP_LCD_FillRect(0,0,200,200);
+  BSP_LCD_SetTransparency(LAYER1, 0x8f);  // 0xff = no transparency
 
-
-
-  BSP_LCD_SetTransparency(LAYER0, 0xf0);
-  BSP_LCD_SetTransparency(LAYER1, 0xf0);
 
   BSP_LCD_DisplayOn();
-
-
-
-
-
-/*
-  BSP_LCD_SelectLayer(1);
-  BSP_LCD_SetTransparency(0, 0xaf);
-  BSP_LCD_SetTransparency(1, 0xaf);
-  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-  BSP_LCD_FillRect(40,80,200,200);
-
-*/
-
-
-
-
 
 
 #endif
@@ -316,6 +300,26 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
+#ifdef Task_e
+
+  int count = 0;
+
+	if ( HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11))
+	{
+		count++;
+		HAL_Delay(250);
+		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
+	}
+	else
+	{
+		count++;
+		HAL_Delay(500);
+		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
+	}
+
+
+	#endif
 
     /* USER CODE BEGIN 3 */
   }

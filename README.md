@@ -1,19 +1,22 @@
-# Task [1..6]
-> [Short descritption what this software does.]
+# Task [e..i]
+> Task  E: Switching on/off the LCD Display with 1 HZ or 2 HZ rate 
+> Task  F: Names of group members are displayed on LCD.
+> Task  G: Some gemotircal shapes are displayed on LCD.
+> Task  H: Counting secounds on LCD.
+> Task  I: Same as Task H but with FreeRTOS.   
 
 ## Group
-- [Name1]
-- [Name2]
-- [Name3]
+- Frank Schuetze
+- Philipp Holländer
+- Lukas Poeppel
 
 ## System Requirements
 
 # Hardware
-
+STM32F746G-Discovery Board
 
 ## Build and Run
-[Describe what to do to build and run the software]
+Eclipse IDE for C/C++ Developers
 
 
-## Usage
-[Describe how to use the software and what should happen]
+
