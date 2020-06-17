@@ -7,7 +7,7 @@
 
 ## Group
 - Frank Schuetze
-- Philipp Holl‰nder
+- Philipp Horl√§nder
 - Lukas Poeppel
 
 ## System Requirements
