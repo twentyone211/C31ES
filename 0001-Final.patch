@@ -1,0 +1,442 @@
+From 05a0cc835fd5e289fe66339ff3ad3f5ecc6b9f8e Mon Sep 17 00:00:00 2001
+From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
+Date: Thu, 18 Jun 2020 17:39:10 +0200
+Subject: [PATCH 1/2] Final
+
+---
+ 0001-Task_e.patch | 232 ++++++++++++++++++++++++++++++++++++++++++++++
+ 0001-Task_f.patch |  40 ++++++++
+ 0002-Task_f.patch |  40 ++++++++
+ Src/main.c        |  16 ++--
+ taskf.txt         |  17 ++++
+ 5 files changed, 336 insertions(+), 9 deletions(-)
+ create mode 100644 0001-Task_e.patch
+ create mode 100644 0001-Task_f.patch
+ create mode 100644 0002-Task_f.patch
+ create mode 100644 taskf.txt
+
+diff --git a/0001-Task_e.patch b/0001-Task_e.patch
+new file mode 100644
+index 0000000..ef737be
+--- /dev/null
++++ b/0001-Task_e.patch
+@@ -0,0 +1,232 @@
++From 7894adb9f1c85e693605b33dcc41028c503740a9 Mon Sep 17 00:00:00 2001
++From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
++Date: Wed, 17 Jun 2020 14:48:11 +0200
++Subject: [PATCH 1/2] Task_e
++
++---
++ 0001-Task_e.txt | 175 ++++++++++++++++++++++++++++++++++++++++++++++++
++ Redme.txt       |   3 +
++ Src/main.c      |   5 +-
++ 3 files changed, 181 insertions(+), 2 deletions(-)
++ create mode 100644 0001-Task_e.txt
++ create mode 100644 Redme.txt
++
++diff --git a/0001-Task_e.txt b/0001-Task_e.txt
++new file mode 100644
++index 0000000..836b0b5
++--- /dev/null
+++++ b/0001-Task_e.txt
++@@ -0,0 +1,175 @@
+++From 59b49f77ed9bfb1990cadbce0c671fa0f3351da3 Mon Sep 17 00:00:00 2001
+++From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
+++Date: Wed, 17 Jun 2020 14:38:05 +0200
+++Subject: [PATCH] Task_e
+++
+++---
+++ README.md  | 21 +++++++++-------
+++ Src/main.c | 70 +++++++++++++++++++++++++++++-------------------------
+++ 2 files changed, 49 insertions(+), 42 deletions(-)
+++
+++diff --git a/README.md b/README.md
+++index ef8d0e4..e31350a 100644
+++--- a/README.md
++++++ b/README.md
+++@@ -1,19 +1,22 @@
+++-# Task [1..6]
+++-> [Short descritption what this software does.]
++++# Task [e..i]
++++> Task  E: Switching on/off the LCD Display with 1 HZ or 2 HZ rate 
++++> Task  F: Names of group members are displayed on LCD.
++++> Task  G: Some gemotircal shapes are displayed on LCD.
++++> Task  H: Counting secounds on LCD.
++++> Task  I: Same as Task H but with FreeRTOS.   
+++ 
+++ ## Group
+++-- [Name1]
+++-- [Name2]
+++-- [Name3]
++++- Frank Schuetze
++++- Philipp Holländer
++++- Lukas Poeppel
+++ 
+++ ## System Requirements
+++ 
+++ # Hardware
+++-
++++STM32F746G-Discovery Board
+++ 
+++ ## Build and Run
+++-[Describe what to do to build and run the software]
++++Eclipse IDE for C/C++ Developers
++++
+++ 
+++ 
+++-## Usage
+++-[Describe how to use the software and what should happen]
+++diff --git a/Src/main.c b/Src/main.c
+++index 7989164..fdece21 100644
+++--- a/Src/main.c
++++++ b/Src/main.c
+++@@ -41,7 +41,8 @@
+++ 
+++ /* Private define ------------------------------------------------------------*/
+++ /* USER CODE BEGIN PD choose task e - j */
+++-#define Task_g
++++#define Task_e
++++
+++ /* USER CODE END PD */
+++ 
+++ /* Private macro -------------------------------------------------------------*/
+++@@ -220,22 +221,23 @@ int main(void)
+++ 	  BSP_LCD_Init();
+++ 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
+++ 	  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
+++-	  BSP_LCD_DisplayOn();
+++   }
+++ 
+++ 
+++ 
++++
+++ #ifdef Task_f
+++ 
++++  char str1[] = "Frank";
++++  char str2[] = "Lukac";
++++  char str3[] = "Philipp";
+++ 
+++   lcd_init();
+++   BSP_LCD_Clear(LCD_COLOR_ORANGE);
+++   BSP_LCD_DisplayStringAt(10, 10, str1, LEFT_MODE);
+++   BSP_LCD_DisplayStringAt(20, 110, str2, CENTER_MODE);
+++   BSP_LCD_DisplayStringAt(50, 220, str3, RIGHT_MODE);
++++  BSP_LCD_DisplayOn();
+++ 
+++ 
+++ #endif
+++@@ -266,56 +268,58 @@ int main(void)
+++ 
+++ #ifdef Task_g
+++ 
+++-#define LAYER0	     ((uint32_t)0) /* background */
+++-#define LAYER1	     ((uint32_t)1) /* foreground */
++++#define LAYER0	     ((uint32_t)0) // background
++++#define LAYER1	     ((uint32_t)1) // foreground
++++#define LCD_BG_START_ADDRESS  (LCD_FB_START_ADDRESS+(480*272*4)) // 480x272 pixel * 4 byte
+++ 
+++ 
+++   BSP_LCD_Init();
+++   BSP_LCD_LayerDefaultInit(LAYER0, LCD_FB_START_ADDRESS);
+++-  BSP_LCD_LayerDefaultInit(LAYER1, LCD_FB_START_ADDRESS);
++++  BSP_LCD_LayerDefaultInit(LAYER1, LCD_BG_START_ADDRESS);
+++ 
+++-  BSP_LCD_SelectLayer(0);
+++-  BSP_LCD_Clear(LCD_COLOR_RED);
+++-  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+++-  BSP_LCD_FillRect(40,80,200,200);
+++ 
+++ 
+++-  BSP_LCD_SelectLayer(LAYER1);
++++  BSP_LCD_SelectLayer(LAYER0); // background
++++  BSP_LCD_Clear(LCD_COLOR_RED);
+++   BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+++-  BSP_LCD_FillRect(0,0,200,200);
+++-
++++  BSP_LCD_FillRect(100,100,150,150);
+++ 
++++  BSP_LCD_SelectLayer(LAYER1); // foreground
++++  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
++++  BSP_LCD_FillRect(0,0,200,200);
++++  BSP_LCD_SetTransparency(LAYER1, 0x8f);  // 0xff = no transparency
+++ 
+++-  BSP_LCD_SetTransparency(LAYER0, 0xf0);
+++-  BSP_LCD_SetTransparency(LAYER1, 0xf0);
+++ 
+++   BSP_LCD_DisplayOn();
+++ 
+++ 
++++#endif
+++ 
+++ 
+++ 
+++-/*
+++-  BSP_LCD_SelectLayer(1);
+++-  BSP_LCD_SetTransparency(0, 0xaf);
+++-  BSP_LCD_SetTransparency(1, 0xaf);
+++-  BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+++-  BSP_LCD_FillRect(40,80,200,200);
+++-
+++-*/
+++-
+++-
+++-
+++-
++++  while (1)
++++  {
++++    /* USER CODE END WHILE */
+++ 
++++#ifdef Task_e
+++ 
+++-#endif
++++  int count = 0;
+++ 
++++	if ( HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11))
++++	{
++++		count++;
++++		HAL_Delay(250);
++++		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
++++	}
++++	else
++++	{
++++		count++;
++++		HAL_Delay(500);
++++		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
++++	}
+++ 
+++ 
+++-  while (1)
+++-  {
+++-    /* USER CODE END WHILE */
++++	#endif
+++ 
+++     /* USER CODE BEGIN 3 */
+++   }
+++-- 
+++2.17.1.windows.2
+++
++diff --git a/Redme.txt b/Redme.txt
++new file mode 100644
++index 0000000..068807a
++--- /dev/null
+++++ b/Redme.txt
++@@ -0,0 +1,3 @@
+++Das ganze Projekt finden sie auch auf Git : 
+++
+++https://github.com/twentyone211/C31ES/
++\ No newline at end of file
++diff --git a/Src/main.c b/Src/main.c
++index fdece21..7cf3684 100644
++--- a/Src/main.c
+++++ b/Src/main.c
++@@ -299,10 +299,10 @@ int main(void)
++ 
++   while (1)
++   {
++-    /* USER CODE END WHILE */
++ 
++-#ifdef Task_e
++ 
+++#ifdef Task_e
+++		 /* USER CODE BEGIN WHILE */
++   int count = 0;
++ 
++ 	if ( HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11))
++@@ -320,6 +320,7 @@ int main(void)
++ 
++ 
++ 	#endif
+++	 /* USER CODE END WHILE */
++ 
++     /* USER CODE BEGIN 3 */
++   }
++-- 
++2.17.1.windows.2
++
+diff --git a/0001-Task_f.patch b/0001-Task_f.patch
+new file mode 100644
+index 0000000..751896e
+--- /dev/null
++++ b/0001-Task_f.patch
+@@ -0,0 +1,40 @@
++From ddbd760ac17dc051f015d90d12931a99245f3858 Mon Sep 17 00:00:00 2001
++From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
++Date: Wed, 17 Jun 2020 14:52:03 +0200
++Subject: [PATCH] Task_f
++
++---
++ STM32F746G-DISCO.xml | 2 +-
++ Src/main.c           | 2 +-
++ 2 files changed, 2 insertions(+), 2 deletions(-)
++
++diff --git a/STM32F746G-DISCO.xml b/STM32F746G-DISCO.xml
++index d426d87..c7d2117 100644
++--- a/STM32F746G-DISCO.xml
+++++ b/STM32F746G-DISCO.xml
++@@ -12,8 +12,8 @@
++ <targetDefinitions>
++   <board id="stm32f746g-disco">
++     <name>STM32F746G-DISCO</name>
++-    <dbgIF>JTAG</dbgIF>
++     <dbgIF>SWD</dbgIF>
+++    <dbgIF>JTAG</dbgIF>
++     <dbgDEV>ST-Link</dbgDEV>
++     <mcuId>stm32f746nghx</mcuId>
++   </board>
++diff --git a/Src/main.c b/Src/main.c
++index 7cf3684..ad57695 100644
++--- a/Src/main.c
+++++ b/Src/main.c
++@@ -41,7 +41,7 @@
++ 
++ /* Private define ------------------------------------------------------------*/
++ /* USER CODE BEGIN PD choose task e - j */
++-#define Task_e
+++#define Task_f
++ 
++ /* USER CODE END PD */
++ 
++-- 
++2.17.1.windows.2
++
+diff --git a/0002-Task_f.patch b/0002-Task_f.patch
+new file mode 100644
+index 0000000..14ac11c
+--- /dev/null
++++ b/0002-Task_f.patch
+@@ -0,0 +1,40 @@
++From ddbd760ac17dc051f015d90d12931a99245f3858 Mon Sep 17 00:00:00 2001
++From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
++Date: Wed, 17 Jun 2020 14:52:03 +0200
++Subject: [PATCH 2/2] Task_f
++
++---
++ STM32F746G-DISCO.xml | 2 +-
++ Src/main.c           | 2 +-
++ 2 files changed, 2 insertions(+), 2 deletions(-)
++
++diff --git a/STM32F746G-DISCO.xml b/STM32F746G-DISCO.xml
++index d426d87..c7d2117 100644
++--- a/STM32F746G-DISCO.xml
+++++ b/STM32F746G-DISCO.xml
++@@ -12,8 +12,8 @@
++ <targetDefinitions>
++   <board id="stm32f746g-disco">
++     <name>STM32F746G-DISCO</name>
++-    <dbgIF>JTAG</dbgIF>
++     <dbgIF>SWD</dbgIF>
+++    <dbgIF>JTAG</dbgIF>
++     <dbgDEV>ST-Link</dbgDEV>
++     <mcuId>stm32f746nghx</mcuId>
++   </board>
++diff --git a/Src/main.c b/Src/main.c
++index 7cf3684..ad57695 100644
++--- a/Src/main.c
+++++ b/Src/main.c
++@@ -41,7 +41,7 @@
++ 
++ /* Private define ------------------------------------------------------------*/
++ /* USER CODE BEGIN PD choose task e - j */
++-#define Task_e
+++#define Task_f
++ 
++ /* USER CODE END PD */
++ 
++-- 
++2.17.1.windows.2
++
+diff --git a/Src/main.c b/Src/main.c
+index ad57695..8ff3b21 100644
+--- a/Src/main.c
++++ b/Src/main.c
+@@ -41,7 +41,7 @@
+ 
+ /* Private define ------------------------------------------------------------*/
+ /* USER CODE BEGIN PD choose task e - j */
+-#define Task_f
++#define Task_e
+ 
+ /* USER CODE END PD */
+ 
+@@ -224,12 +224,10 @@ int main(void)
+   }
+ 
+ 
+-
+-
+ #ifdef Task_f
+ 
+   char str1[] = "Frank";
+-  char str2[] = "Lukac";
++  char str2[] = "Lukas";
+   char str3[] = "Philipp";
+ 
+   lcd_init();
+@@ -270,7 +268,7 @@ int main(void)
+ 
+ #define LAYER0	     ((uint32_t)0) // background
+ #define LAYER1	     ((uint32_t)1) // foreground
+-#define LCD_BG_START_ADDRESS  (LCD_FB_START_ADDRESS+(480*272*4)) // 480x272 pixel * 4 byte
++#define LCD_BG_START_ADDRESS  (LCD_FB_START_ADDRESS+(480*272*4)) // 480x272 pixel * 4 byte (RGB+Alpha)
+ 
+ 
+   BSP_LCD_Init();
+@@ -285,6 +283,7 @@ int main(void)
+   BSP_LCD_FillRect(100,100,150,150);
+ 
+   BSP_LCD_SelectLayer(LAYER1); // foreground
++  BSP_LCD_Clear(LCD_COLOR_RED);
+   BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+   BSP_LCD_FillRect(0,0,200,200);
+   BSP_LCD_SetTransparency(LAYER1, 0x8f);  // 0xff = no transparency
+@@ -300,20 +299,19 @@ int main(void)
+   while (1)
+   {
+ 
++	  /* USER CODE BEGIN WHILE */
+ 
+ #ifdef Task_e
+-		 /* USER CODE BEGIN WHILE */
+-  int count = 0;
++
++
+ 
+ 	if ( HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_11))
+ 	{
+-		count++;
+ 		HAL_Delay(250);
+ 		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
+ 	}
+ 	else
+ 	{
+-		count++;
+ 		HAL_Delay(500);
+ 		HAL_GPIO_TogglePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN);
+ 	}
+diff --git a/taskf.txt b/taskf.txt
+new file mode 100644
+index 0000000..dab5c97
+--- /dev/null
++++ b/taskf.txt
+@@ -0,0 +1,17 @@
++#ifdef Task_f
++
++  char str1[] = "Frank";
++  char str2[] = "Lukac";
++  char str3[] = "Philipp";
++
++  lcd_init();
++  BSP_LCD_Clear(LCD_COLOR_ORANGE);
++  BSP_LCD_DisplayStringAt(10, 10, str1, LEFT_MODE);
++  BSP_LCD_DisplayStringAt(20, 110, str2, CENTER_MODE);
++  BSP_LCD_DisplayStringAt(50, 220, str3, RIGHT_MODE);
++  BSP_LCD_DisplayOn();
++
++
++#endif
++
++projekt : https://github.com/twentyone211/C31ES
+\ No newline at end of file
+-- 
+2.17.1.windows.2
+
