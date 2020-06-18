@@ -41,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD choose task e - j */
-#define Task_h
+#define Task_i
 
 /* USER CODE END PD */
 
@@ -200,22 +200,24 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-
-  //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
-  // defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
+#ifdef Task_i
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+#endif
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
- // osKernelStart();
+#ifdef Task_i
+   osKernelStart();
+#endif
   
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+#ifdef Task_g
   void lcd_init()
   {
 	  BSP_LCD_Init();
@@ -224,7 +226,7 @@ int main(void)
   }
 
 
-#ifdef Task_f
+
 
   char str1[] = "Frank";
   char str2[] = "Lukas";
