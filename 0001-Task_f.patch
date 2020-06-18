@@ -1,7 +1,7 @@
 From ddbd760ac17dc051f015d90d12931a99245f3858 Mon Sep 17 00:00:00 2001
 From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
 Date: Wed, 17 Jun 2020 14:52:03 +0200
-Subject: [PATCH] Task_f
+Subject: [PATCH 1/2] Task_f
 
 ---
  STM32F746G-DISCO.xml | 2 +-
