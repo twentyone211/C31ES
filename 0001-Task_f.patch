@@ -1,0 +1,40 @@
+From ddbd760ac17dc051f015d90d12931a99245f3858 Mon Sep 17 00:00:00 2001
+From: Frank Schuetze <Frank.Schuetze@htwb.onmicrosoft.com>
+Date: Wed, 17 Jun 2020 14:52:03 +0200
+Subject: [PATCH] Task_f
+
+---
+ STM32F746G-DISCO.xml | 2 +-
+ Src/main.c           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/STM32F746G-DISCO.xml b/STM32F746G-DISCO.xml
+index d426d87..c7d2117 100644
+--- a/STM32F746G-DISCO.xml
++++ b/STM32F746G-DISCO.xml
+@@ -12,8 +12,8 @@
+ <targetDefinitions>
+   <board id="stm32f746g-disco">
+     <name>STM32F746G-DISCO</name>
+-    <dbgIF>JTAG</dbgIF>
+     <dbgIF>SWD</dbgIF>
++    <dbgIF>JTAG</dbgIF>
+     <dbgDEV>ST-Link</dbgDEV>
+     <mcuId>stm32f746nghx</mcuId>
+   </board>
+diff --git a/Src/main.c b/Src/main.c
+index 7cf3684..ad57695 100644
+--- a/Src/main.c
++++ b/Src/main.c
+@@ -41,7 +41,7 @@
+ 
+ /* Private define ------------------------------------------------------------*/
+ /* USER CODE BEGIN PD choose task e - j */
+-#define Task_e
++#define Task_f
+ 
+ /* USER CODE END PD */
+ 
+-- 
+2.17.1.windows.2
+
