@@ -201,30 +201,46 @@ int main(void)
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
 #ifdef Task_i
+<<<<<<< HEAD
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 #endif
+=======
+   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
+   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+#endif
+
+>>>>>>> 53d6b6443993dfd843b4207f8964322117144bef
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
-
+#ifdef Task_i
   /* Start scheduler */
+<<<<<<< HEAD
 #ifdef Task_i
    osKernelStart();
 #endif
   
+=======
+  osKernelStart();
+#endif
+>>>>>>> 53d6b6443993dfd843b4207f8964322117144bef
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+<<<<<<< HEAD
 #ifdef Task_g
+=======
+#ifdef Task_h
+>>>>>>> 53d6b6443993dfd843b4207f8964322117144bef
   void lcd_init()
   {
 	  BSP_LCD_Init();
 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
 	  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
   }
-
+#endif
 
 
 
