@@ -217,9 +217,9 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-#ifdef Task_g
 
-#ifdef Task_h
+
+
 
   void lcd_init()
   {
@@ -227,9 +227,9 @@ int main(void)
 	  BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
 	  BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
   }
-#endif
 
 
+#ifdef Task_f
 
   char str1[] = "Frank";
   char str2[] = "Lukas";
